@@ -62,6 +62,7 @@ typings/
 # IDE's
 .vscode
 .idea
+.idea/vcs.xml
 
 
 vendor
