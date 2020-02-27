@@ -1,0 +1,94 @@
+{
+  "name": "kea-socket.io",
+  "version": "0.1.0",
+  "description": "Socket.io binding for Kea store",
+  "author": "Sanchez Weezer",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "jsnext:main": "es/index.js",
+  "esnext": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sanchezweezer/kea-socket.io.git"
+  },
+  "bugs": {
+    "url": "https://github.com/sanchezweezer/kea-socket.io/issues"
+  },
+  "homepage": "https://github.com/sanchezweezer/kea-socket.io#readme",
+  "size-limit": [
+    {
+      "path": "lib/index.js",
+      "limit": "15 KB"
+    }
+  ],
+  "scripts": {
+    "build": "npm run lint && concurrently \"npm run build:cjs\" \"npm run build:es\"",
+    "build:cjs": "cross-env BABEL_ENV=cjs babel src --out-dir lib --ignore src/__tests__",
+    "build:es": "cross-env BABEL_ENV=es babel src --out-dir es --ignore src/__tests__",
+    "start": "concurrently --kill-others \"npm run start:cjs\" \"npm run start:es\"",
+    "start:cjs": "cross-env BABEL_ENV=cjs babel -w src --out-dir lib --ignore src/__tests__",
+    "start:es": "cross-env BABEL_ENV=es babel -w src --out-dir es --ignore src/__tests__",
+    "size": "size-limit",
+    "test": "jest",
+    "lint": "eslint src/**",
+    "prepublish": "npm run build"
+  },
+  "files": [
+    "es",
+    "lib",
+    "src",
+    "install"
+  ],
+  "jest": {
+    "testPathIgnorePatterns": [
+      "<rootDir>/es/",
+      "<rootDir>/lib/",
+      "<rootDir>/node_modules/",
+      "<rootDir>/src/__tests__/helper/"
+    ]
+  },
+  "peerDependencies": {
+    "kea": ">= 1.0.0",
+    "socket.io-client": ">= 2.3.0",
+    "socketio-wildcard": ">= 2.0.0"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.1",
+    "babel-jest": "^21.2.0",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-react": "^6.24.1",
+    "concurrently": "^3.5.0",
+    "cross-env": "^5.1.0",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.12.1",
+    "eslint": "^4.8.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.2.0",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-react": "^7.4.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "jest": "^21.2.1",
+    "jest-environment-node-debug": "^2.0.0",
+    "jsdom": "^11.3.0",
+    "kea": "^1.0.0",
+    "kea-thunk": "^1.0.0",
+    "prettier": "^1.19.1",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-redux": "^7.0.2",
+    "react-test-renderer": "^16.8.6",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0",
+    "size-limit": "^0.11.6",
+    "socket.io-client": "^2.3.0",
+    "socketio-wildcard": "^2.0.0"
+  }
+}
