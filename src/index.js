@@ -2,7 +2,7 @@ import { getPluginContext, setPluginContext } from 'kea';
 import io from 'socket.io-client';
 import wildcardMiddleware from 'socketio-wildcard';
 
-import { isSocketIo } from './utils';
+import { isSocketIo, trimNamespace } from './utils';
 import { SYSTEM_EVENTS, defaultsOptions } from './config';
 
 const patch = wildcardMiddleware(io.Manager);
@@ -44,7 +44,11 @@ const observe = ({ type, payload, logic, input, socket }) => {
   }
 
   /** action type logic */
-  let storeActionName = type;
+  const namespace = trimNamespace(socket.nsp);
+  let storeActionName = namespace ? namespace + '_' + type : type;
+  if (SYSTEM_EVENTS.includes(type)) {
+    storeActionName = 'sys_' + storeActionName;
+  }
   if (SYSTEM_EVENTS.includes(type)) {
     storeActionName = 'sys_' + type;
   }
