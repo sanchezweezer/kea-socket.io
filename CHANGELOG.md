@@ -6,6 +6,12 @@ As we're at the 0.x phase, deprecations and breaking changes will still happen. 
 
 Once we react 1.0 all deprecations will be removed and the project will switch to SemVer.
 
+## 0.2.1 - 2020-02-28
+
+### Changed
+
+- Change dependencies list
+
 ## 0.2.0 - 2020-02-28
 
 ### Changed
