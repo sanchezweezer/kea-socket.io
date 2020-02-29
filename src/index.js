@@ -10,14 +10,14 @@ const patch = wildcardMiddleware(io.Manager);
 const emitters = {};
 
 const emitterActions = Object.freeze({
-  removeEmitterByNameSpace: ({ name, options }) => {
+  removeEmitterByNameSpace: ({ name, options = {} }) => {
     const { emitters = {}, ...rest } = getPluginContext('kea-socket.io');
     const newEmitters = { ...emitters };
 
     const { stopEmitter = true } = options;
     if (stopEmitter) {
       const socket = newEmitters[name];
-      if (socket.connected) {
+      if (socket && socket.connected) {
         socket.close();
       }
     }
