@@ -10,7 +10,24 @@ const patch = wildcardMiddleware(io.Manager);
 const emitters = {};
 
 const emitterActions = Object.freeze({
-  addNewEmitter: (socket) => {
+  removeEmitterByNameSpace: ({ name, options }) => {
+    const { emitters = {}, ...rest } = getPluginContext('kea-socket.io');
+    const newEmitters = { ...emitters };
+
+    const { stopEmitter = true } = options;
+    if (stopEmitter) {
+      const socket = newEmitters[name];
+      if (socket.connected) {
+        socket.close();
+      }
+    }
+    newEmitters[name] = undefined;
+    setPluginContext('kea-socket.io', {
+      ...rest,
+      emitters: newEmitters
+    });
+  },
+  addNewEmitter: ({ socket }) => {
     const { emitters = {}, ...rest } = getPluginContext('kea-socket.io');
     const newEmitters = { ...emitters };
     patch(socket);

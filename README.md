@@ -200,6 +200,15 @@ resetContext({
 });
 ```
 
+# EmitterActions
+
+- disconnectAll()
+- reconnectAll()
+- addNewEmitter({socket}) - pass socket from socket.io to function
+- removeEmitterByNameSpace({name, options}) - pass name of socket (like: `default` or `namespaced`)
+  - options
+    - stopEmitter - by default true, if you don't need to disconnect pass `false`
+
 For access to emitters in your emitterActions you can use:
 
 ```js
