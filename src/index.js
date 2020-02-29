@@ -10,6 +10,16 @@ const patch = wildcardMiddleware(io.Manager);
 const emitters = {};
 
 const emitterActions = Object.freeze({
+  addNewEmitter: (socket) => {
+    const { emitters = {}, ...rest } = getPluginContext('kea-socket.io');
+    const newEmitters = { ...emitters };
+    patch(socket);
+    newEmitters[socket.nsp.substr(1) || 'default'] = socket;
+    setPluginContext('kea-socket.io', {
+      ...rest,
+      emitters: newEmitters
+    });
+  },
   disconnectAll: () => {
     const { emitters } = getPluginContext('kea-socket.io');
     for (let name in emitters) {
