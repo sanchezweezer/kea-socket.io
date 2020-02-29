@@ -74,7 +74,7 @@ const observe = ({ type, payload, logic, input, socket }) => {
   }
 };
 
-const localStoragePlugin = ({ sockets = [io()], ...options } = {}) => ({
+const localStoragePlugin = ({ sockets = [], ...options } = {}) => ({
   name: 'kea-socket.io',
 
   events: {
