@@ -1,4 +1,4 @@
-import { getPluginContext, setPluginContext } from 'kea';
+import { getContext, getPluginContext, setPluginContext } from 'kea';
 import wildcardMiddleware from 'socketio-wildcard';
 import io from 'socket.io-client';
 
@@ -7,11 +7,24 @@ import { observe } from './observe';
 
 export const patchSocket = wildcardMiddleware(io.Manager);
 
+export const forAllLogic = (cb) => {
+  /** inject to all currentLogic */
+  const keaContext = getContext();
+
+  const { mount: { mounted = {} } = {} } = keaContext;
+
+  Object.keys(mounted).forEach((logicKey) => {
+    const logic = mounted[logicKey];
+
+    cb(logic);
+  });
+};
+
 export const emitterActions = Object.freeze({
   removeEmitterByNameSpace: ({ name, options = {} }) => {
     const { emitters = {}, ...rest } = getPluginContext('kea-socket.io');
-    const { [name]: deletedEmitter, ...newEmitters } = emitters;
 
+    const { [name]: deletedEmitter, ...newEmitters } = emitters;
     const { stopEmitter = true } = options;
     if (stopEmitter) {
       if (deletedEmitter && deletedEmitter.connected) {
@@ -22,9 +35,15 @@ export const emitterActions = Object.freeze({
       ...rest,
       emitters: newEmitters
     });
+
+    /** inject to all currentLogic */
+    forAllLogic((logic) => {
+      logic.emitters = { ...newEmitters };
+    });
   },
   addNewEmitter: ({ socket }) => {
     const { emitters = {}, ...rest } = getPluginContext('kea-socket.io');
+
     const newEmitters = { ...emitters };
     patchSocket(socket);
     socket.on('*', ({ data } = {}) => {
@@ -35,6 +54,11 @@ export const emitterActions = Object.freeze({
     setPluginContext('kea-socket.io', {
       ...rest,
       emitters: newEmitters
+    });
+
+    /** inject to all currentLogic */
+    forAllLogic((logic) => {
+      logic.emitters = { ...newEmitters };
     });
   },
   disconnectAll: () => {

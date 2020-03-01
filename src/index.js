@@ -2,7 +2,7 @@ import { getPluginContext, setPluginContext } from 'kea';
 
 import { defaultsOptions } from './config';
 import { observe } from './observe';
-import { emitterActions, patchSocket } from './actions';
+import { patchSocket, emitterActions } from './actions';
 
 const localStoragePlugin = ({ sockets = [], ...options } = {}) => ({
   name: 'kea-socket.io',
@@ -26,6 +26,14 @@ const localStoragePlugin = ({ sockets = [], ...options } = {}) => ({
       });
     },
 
+    beforeMount(logic) {
+      const { emitters, options = {} } = getPluginContext('kea-socket.io');
+      const { emitterActions: additionalActions } = options;
+
+      logic.emitters = { ...emitters };
+      logic.emitterActions = { ...emitterActions, ...additionalActions };
+    },
+
     beforeCloseContext(context) {
       /** reset context ? */
       setPluginContext('kea-socket.io', { emitters: {}, options: { ...defaultsOptions } });
@@ -33,22 +41,10 @@ const localStoragePlugin = ({ sockets = [], ...options } = {}) => ({
   },
 
   buildOrder: {
-    socketEmitter: { after: 'thunks' },
-    socketSubscribe: { after: 'socketEmitter' }
+    socketSubscribe: { after: 'thunks' }
   },
 
   buildSteps: {
-    socketEmitter(logic, input) {
-      if (!(input.thunks || input.sagas || (input.connect && input.connect.sagas))) {
-        return;
-      }
-
-      const { emitters, options = {} } = getPluginContext('kea-socket.io');
-      const { emitterActions: additionalActions } = options;
-
-      logic.emitters = { ...emitters };
-      logic.emitterActions = { ...emitterActions, ...additionalActions };
-    },
     socketSubscribe(logic, input) {
       if (input.socketPrefix) {
         logic.socketPrefix = input.socketPrefix;
