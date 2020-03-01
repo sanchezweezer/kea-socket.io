@@ -185,10 +185,10 @@ resetContext({
 
       // to change the error handle, func({ error, logic, input, socket })
       // if func return === false, then event handle stop
-      errorHandler: ({ error, logic, input, socket } = {}) => {
+      errorHandler: ({ error, socket, getKeaContext } = {}) => {
         console.error('[kea-socket.io] ' + error);
         console.error(socket);
-        console.error(logic);
+        console.error(getKeaContext());
       },
       // to change mapping of events from socket to store, func({ name })
       mapSocketEventToStore: ({ name }) => name,
