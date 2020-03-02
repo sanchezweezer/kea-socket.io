@@ -3,6 +3,7 @@ import { getPluginContext, setPluginContext } from 'kea';
 import { defaultsOptions } from './config';
 import { observe } from './observe';
 import { patchSocket, emitterActions } from './actions';
+import { getEmitters } from './utils';
 
 const localStoragePlugin = ({ sockets = [], ...options } = {}) => ({
   name: 'kea-socket.io',
@@ -31,6 +32,7 @@ const localStoragePlugin = ({ sockets = [], ...options } = {}) => ({
       const { emitterActions: additionalActions } = options;
 
       logic.emitters = { ...emitters };
+      logic.getEmitters = getEmitters;
       logic.emitterActions = { ...emitterActions, ...additionalActions };
     },
 

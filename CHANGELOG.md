@@ -6,6 +6,12 @@ As we're at the 0.x phase, deprecations and breaking changes will still happen. 
 
 Once we react 1.0 all deprecations will be removed and the project will switch to SemVer.
 
+## 0.4.0 - 2020-03-02
+
+### Changed
+
+- BREAKING CHANGES: emitters from kea logic changes to getEmitters func(name[optional])
+
 ## 0.3.1 - 2020-03-01
 
 ### Changed
