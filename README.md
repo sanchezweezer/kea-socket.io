@@ -32,8 +32,8 @@ resetContext({
 
 # Usage
 
-To use socket.emit, make sure your logic store has thunk or saga plugin. Then just take emitters from params `{ emitters }` and use it in your code.
-Emitters is a object than contain all named sockets you pass to plugin. So default socket have `nsp === "/"`.
+To use socket.emit, make sure your logic store has thunk or saga plugin. Then just take emitters from params `{ getEmitters }` and use it in your code.
+Emitters is a object than contain all named sockets you pass to plugin. So default socket have `nsp === "/"`. Or you can pass to `getEmitters` param `name` and get needed socket directly.
 <br/>
 <br/>
 
@@ -82,10 +82,10 @@ const someLogic = kea({
       }
     ]
   }),
-  thunks: ({ emitters, emitterActions }) => ({
+  thunks: ({ getEmitters, emitterActions }) => ({
     testEmit: () => {
       // emit event to socket with default nsp ('/')
-      emitters.default.emit('message', 'hello world');
+      getEmitters().default.emit('message', 'hello world');
       emitterActions.disconnectAll();
     },
     socket_anotherTestEvent: ({ payload }) => {
@@ -117,10 +117,10 @@ const someLogic = kea({
       }
     ]
   }),
-  thunks: ({ emitters, emitterActions }) => ({
+  thunks: ({ getEmitters, emitterActions }) => ({
     testEmit: () => {
       // emit event to socket with default nsp ('/')
-      emitters.default.emit('message', 'hello world');
+      getEmitters('default').emit('message', 'hello world');
       emitterActions.disconnectAll();
     },
     anotherTestEvent: ({ payload }) => {
