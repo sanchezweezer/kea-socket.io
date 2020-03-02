@@ -1,4 +1,4 @@
-import { getContext, getPluginContext, setPluginContext } from 'kea';
+import { getPluginContext, setPluginContext } from 'kea';
 import wildcardMiddleware from 'socketio-wildcard';
 import io from 'socket.io-client';
 
