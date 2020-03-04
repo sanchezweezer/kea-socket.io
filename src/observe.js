@@ -1,5 +1,5 @@
 import { getContext, getPluginContext } from 'kea';
-import { trimNamespace } from './utils';
+import { trimNamespace, getCurrentName } from './utils';
 import { SYSTEM_EVENTS } from './config';
 
 export const observe = ({ type, payload, socket }) => {
@@ -16,19 +16,18 @@ export const observe = ({ type, payload, socket }) => {
 
   /** action type logic */
   const namespace = trimNamespace(socket.nsp);
-  let storeActionName = namespace ? namespace + '_' + type : type;
+  let storeActionName = type;
   if (SYSTEM_EVENTS.includes(type)) {
     storeActionName = 'sys_' + storeActionName;
   }
-  if (SYSTEM_EVENTS.includes(type)) {
-    storeActionName = 'sys_' + type;
-  }
+  storeActionName = namespace ? namespace + '_' + storeActionName : storeActionName;
+  storeActionName = prefix ? prefix + storeActionName : storeActionName;
   storeActionName = mapSocketEventToStore({ name: storeActionName });
 
   /** find action */
   Object.keys(mounted).forEach((logicKey) => {
     const logic = mounted[logicKey];
-    const currentName = prefix !== logic.socketPrefix ? prefix + storeActionName : storeActionName;
+    const currentName = logic.socketPrefix ? getCurrentName(storeActionName, logic.socketPrefix) : storeActionName;
     if (Object.keys(logic.actions).includes(currentName)) {
       /** call action */
       const func = logic.actions[currentName];

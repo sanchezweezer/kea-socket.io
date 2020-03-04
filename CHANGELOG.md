@@ -6,6 +6,13 @@ As we're at the 0.x phase, deprecations and breaking changes will still happen. 
 
 Once we react 1.0 all deprecations will be removed and the project will switch to SemVer.
 
+## 0.4.1 - 2020-03-02
+
+### Changed
+
+- Update readme.md
+- Add prefix additional function
+
 ## 0.4.0 - 2020-03-02
 
 ### Changed

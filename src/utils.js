@@ -15,3 +15,10 @@ export const getEmitters = (name) => {
   }
   return emitters;
 };
+
+export const getCurrentName = (name, prefix = '') => {
+  if (name.indexOf(prefix) === 0) {
+    name.replace(prefix, '');
+  }
+  return name;
+};
