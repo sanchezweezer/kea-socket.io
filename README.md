@@ -50,6 +50,9 @@ For example:
  nsp: /testNsp
 
  result action name: socket_testNsp_testEvent
+
+ if event is reseve by socket.io to name you need to add sys_:
+ socket_testNsp_sys_testEvent
 ```
 
 Also, you can use global funcs for sockets. Right now there are two of them:
