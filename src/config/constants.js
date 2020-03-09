@@ -8,8 +8,5 @@ export const SYSTEM_EVENTS = [
   'reconnect_error',
   'reconnect_failed',
   'connect_error',
-  'connect_timeout',
-  'connecting',
-  'ping',
-  'pong'
+  'connect_timeout'
 ];

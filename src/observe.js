@@ -1,6 +1,5 @@
 import { getContext, getPluginContext } from 'kea';
 import { trimNamespace, getCurrentName } from './utils';
-import { SYSTEM_EVENTS } from './config';
 
 const callActions = (logic, currentPrefix, storeActionName, payload) => {
   const currentName = currentPrefix ? getCurrentName(storeActionName, currentPrefix) : storeActionName;
@@ -16,7 +15,7 @@ const callActions = (logic, currentPrefix, storeActionName, payload) => {
 export const observe = ({ type, payload, socket }) => {
   /** error handle */
   const { options = {} } = getPluginContext('kea-socket.io');
-  const { errorHandler, ERROR_EVENTS = [], mapSocketEventToStore, prefix = '' } = options;
+  const { errorHandler, ERROR_EVENTS = [], SYSTEM_EVENTS = [], mapSocketEventToStore, prefix = '' } = options;
   if (ERROR_EVENTS.includes(type)) {
     errorHandler({ error: payload, getKeaContext: getContext, socket });
   }

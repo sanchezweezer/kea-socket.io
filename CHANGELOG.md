@@ -6,6 +6,14 @@ As we're at the 0.x phase, deprecations and breaking changes will still happen. 
 
 Once we react 1.0 all deprecations will be removed and the project will switch to SemVer.
 
+## 0.4.5 - 2020-03-09
+
+### Changed
+
+- Add system events observe specify
+- Fix prefix cut
+- Fix system events handle
+
 ## 0.4.4 - 2020-03-09
 
 ### Changed
