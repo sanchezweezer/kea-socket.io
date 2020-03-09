@@ -2,7 +2,7 @@ import { getContext, getPluginContext } from 'kea';
 import { trimNamespace, getCurrentName } from './utils';
 import { SYSTEM_EVENTS } from './config';
 
-const callActions = (logic, currentPrefix, storeActionName) => {
+const callActions = (logic, currentPrefix, storeActionName, payload) => {
   const currentName = currentPrefix ? getCurrentName(storeActionName, currentPrefix) : storeActionName;
   if (Object.keys(logic.actions).includes(currentName)) {
     /** call action */
@@ -42,6 +42,6 @@ export const observe = ({ type, payload, socket }) => {
     /** make prefix look like array */
     const prefixArray = Array.isArray(logicPrefix) ? logicPrefix : [logicPrefix];
 
-    prefixArray.forEach((item) => callActions(logic, item, storeActionName));
+    prefixArray.forEach((item) => callActions(logic, item, storeActionName, payload));
   });
 };
