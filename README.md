@@ -99,12 +99,12 @@ const someLogic = kea({
 });
 ```
 
-if you don't want add prefix to your actions, you can add socketPrefix prop to your logic:
+if you don't want add prefix to your actions, you can add socketPrefix prop to your logic, it can be string, array or func (func({socket, nsp}) => return array or string):
 
 ```js
 const someLogic = kea({
   path: () => ['scenes', 'something', 'foobar'], // NEEDED!
-  socketPrefix: 'socket_', // this can be array or sync function({socket}) also
+  socketPrefix: 'socket_', // this can be array or sync function({socket, nsp}) also
   actions: () => ({
     testEvent: ({ payload }) => payload,
     change: (value) => ({ value })

@@ -38,7 +38,8 @@ export const observe = ({ type, payload, socket }) => {
   /** find action */
   Object.keys(mounted).forEach((logicKey) => {
     const logic = mounted[logicKey];
-    const logicPrefix = typeof logic.socketPrefix === 'function' ? logic.socketPrefix({ socket }) : logic.socketPrefix;
+    const logicPrefix =
+      typeof logic.socketPrefix === 'function' ? logic.socketPrefix({ socket, nsp: namespace }) : logic.socketPrefix;
     /** make prefix look like array */
     const prefixArray = Array.isArray(logicPrefix) ? logicPrefix : [logicPrefix];
 
