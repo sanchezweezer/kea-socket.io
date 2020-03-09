@@ -2,7 +2,7 @@ import { getPluginContext, setPluginContext } from 'kea';
 import wildcardMiddleware from 'socketio-wildcard';
 import io from 'socket.io-client';
 
-import { isSocketIo } from './utils';
+import { addSystemObserve, isSocketIo } from './utils';
 import { observe } from './observe';
 
 export const patchSocket = wildcardMiddleware(io.Manager);
@@ -28,6 +28,7 @@ export const emitterActions = Object.freeze({
 
     const newEmitters = { ...emitters };
     patchSocket(socket);
+    addSystemObserve(socket);
     socket.on('*', ({ data } = {}) => {
       const [type, payload] = data;
       observe({ type, payload, socket });
