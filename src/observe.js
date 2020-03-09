@@ -2,6 +2,17 @@ import { getContext, getPluginContext } from 'kea';
 import { trimNamespace, getCurrentName } from './utils';
 import { SYSTEM_EVENTS } from './config';
 
+const callActions = (logic, currentPrefix, storeActionName) => {
+  const currentName = currentPrefix ? getCurrentName(storeActionName, currentPrefix) : storeActionName;
+  if (Object.keys(logic.actions).includes(currentName)) {
+    /** call action */
+    const func = logic.actions[currentName];
+    if (typeof func === 'function') {
+      func({ payload });
+    }
+  }
+};
+
 export const observe = ({ type, payload, socket }) => {
   /** error handle */
   const { options = {} } = getPluginContext('kea-socket.io');
@@ -27,13 +38,10 @@ export const observe = ({ type, payload, socket }) => {
   /** find action */
   Object.keys(mounted).forEach((logicKey) => {
     const logic = mounted[logicKey];
-    const currentName = logic.socketPrefix ? getCurrentName(storeActionName, logic.socketPrefix) : storeActionName;
-    if (Object.keys(logic.actions).includes(currentName)) {
-      /** call action */
-      const func = logic.actions[currentName];
-      if (typeof func === 'function') {
-        func({ payload });
-      }
-    }
+    const logicPrefix = typeof logic.socketPrefix === 'function' ? logic.socketPrefix({ socket }) : logic.socketPrefix;
+    /** make prefix look like array */
+    const prefixArray = Array.isArray(logicPrefix) ? logicPrefix : [logicPrefix];
+
+    prefixArray.forEach((item) => callActions(logic, item, storeActionName));
   });
 };
