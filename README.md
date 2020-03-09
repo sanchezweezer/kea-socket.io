@@ -104,7 +104,7 @@ if you don't want add prefix to your actions, you can add socketPrefix prop to y
 ```js
 const someLogic = kea({
   path: () => ['scenes', 'something', 'foobar'], // NEEDED!
-  socketPrefix: 'socket_',
+  socketPrefix: 'socket_', // this can be array or sync function({socket}) also
   actions: () => ({
     testEvent: ({ payload }) => payload,
     change: (value) => ({ value })
