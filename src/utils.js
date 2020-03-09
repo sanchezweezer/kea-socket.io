@@ -1,4 +1,6 @@
 import { getPluginContext } from 'kea';
+import { SYSTEM_EVENTS } from './config';
+import { observe } from './observe';
 
 export const isFunction = (obj) => typeof obj === 'function';
 
@@ -21,4 +23,13 @@ export const getCurrentName = (name, prefix = '') => {
     name.replace(prefix, '');
   }
   return name;
+};
+
+export const addSystemObserve = (socket) => {
+  SYSTEM_EVENTS.forEach((eventName) => {
+    const type = eventName;
+    socket.on(type, (payload) => {
+      observe({ type, payload, socket });
+    });
+  });
 };

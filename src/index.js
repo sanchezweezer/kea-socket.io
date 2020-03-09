@@ -3,7 +3,7 @@ import { getPluginContext, setPluginContext } from 'kea';
 import { defaultsOptions } from './config';
 import { observe } from './observe';
 import { patchSocket, emitterActions } from './actions';
-import { getEmitters } from './utils';
+import { getEmitters, addSystemObserve } from './utils';
 
 const localStoragePlugin = ({ sockets = [], ...options } = {}) => ({
   name: 'kea-socket.io',
@@ -16,6 +16,7 @@ const localStoragePlugin = ({ sockets = [], ...options } = {}) => ({
       sockets.forEach((socket) => {
         patchSocket(socket);
         emitters[socket.nsp.substr(1) || 'default'] = socket;
+        addSystemObserve(socket);
         socket.on('*', ({ data } = {}) => {
           const [type, payload] = data;
           observe({ type, payload, socket });
