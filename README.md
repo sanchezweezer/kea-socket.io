@@ -197,7 +197,23 @@ resetContext({
       mapSocketEventToStore: ({ name }) => name,
 
       // to add your own global funcs to sockets, funcs don't have any params
-      emitterActions: {}
+      emitterActions: {},
+      // you can specify system events observe
+      SYSTEM_EVENTS: [
+        'connect',
+        'error',
+        'disconnect',
+        'reconnect',
+        'reconnect_attempt',
+        'reconnecting',
+        'reconnect_error',
+        'reconnect_failed',
+        'connect_error',
+        'connect_timeout',
+        'connecting',
+        'ping',
+        'pong'
+      ]
     })
   ]
 });

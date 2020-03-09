@@ -1,5 +1,4 @@
 import { getPluginContext } from 'kea';
-import { SYSTEM_EVENTS } from './config';
 import { observe } from './observe';
 
 export const isFunction = (obj) => typeof obj === 'function';
@@ -20,12 +19,15 @@ export const getEmitters = (name) => {
 
 export const getCurrentName = (name, prefix = '') => {
   if (name.indexOf(prefix) === 0) {
-    name.replace(prefix, '');
+    return name.replace(prefix, '');
   }
   return name;
 };
 
 export const addSystemObserve = (socket) => {
+  const { options = {} } = getPluginContext('kea-socket.io');
+  const { SYSTEM_EVENTS = [] } = options;
+
   SYSTEM_EVENTS.forEach((eventName) => {
     const type = eventName;
     socket.on(type, (payload) => {
