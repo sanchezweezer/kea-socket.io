@@ -35,3 +35,23 @@ export const addSystemObserve = (socket) => {
     });
   });
 };
+
+export const wildcardMiddleware = (Emitter) => {
+  const emit = Emitter.prototype.emit;
+
+  function onevent(packet) {
+    const args = packet.data || [];
+    if (packet.id != null) {
+      args.push(this.ack(packet.id));
+    }
+    emit.call(this, '*', packet);
+    return emit.apply(this, args);
+  }
+
+  return (socket, next) => {
+    if (socket.onevent !== onevent) {
+      socket.onevent = onevent;
+    }
+    return next ? next() : null;
+  };
+};

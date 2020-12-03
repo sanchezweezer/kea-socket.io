@@ -56,12 +56,10 @@
   },
   "peerDependencies": {
     "kea": ">= 1.0.0",
-    "socket.io-client": ">= 2.3.0",
-    "socketio-wildcard": ">= 2.0.0"
+    "socket.io-client": ">= 2.3.0"
   },
   "dependencies": {
-    "socket.io-client": "^2.3.0",
-    "socketio-wildcard": "^2.0.0"
+    "socket.io-client": "^2.3.0"
   },
   "devDependencies": {
     "@babel/plugin-proposal-object-rest-spread": "^7.8.3",
@@ -98,7 +96,6 @@
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
     "size-limit": "^4.0.2",
-    "socket.io-client": "^2.3.0",
-    "socketio-wildcard": "^2.0.0"
+    "socket.io-client": "^2.3.0"
   }
 }

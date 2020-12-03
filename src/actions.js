@@ -1,8 +1,7 @@
 import { getPluginContext, setPluginContext } from 'kea';
-import wildcardMiddleware from 'socketio-wildcard';
 import io from 'socket.io-client';
 
-import { addSystemObserve, isSocketIo } from './utils';
+import { addSystemObserve, isSocketIo, wildcardMiddleware } from './utils';
 import { observe } from './observe';
 
 export const patchSocket = wildcardMiddleware(io.Manager);
