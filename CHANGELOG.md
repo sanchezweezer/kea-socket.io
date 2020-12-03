@@ -6,6 +6,12 @@ As we're at the 0.x phase, deprecations and breaking changes will still happen. 
 
 Once we react 1.0 all deprecations will be removed and the project will switch to SemVer.
 
+## 0.4.7 - 2020-12-03
+
+### Changed
+
+- Add react native support
+
 ## 0.4.6 - 2020-04-01
 
 ### Changed
