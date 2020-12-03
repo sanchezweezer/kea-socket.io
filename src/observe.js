@@ -47,3 +47,15 @@ export const observe = ({ type, payload, socket }) => {
     }
   });
 };
+
+export const addSystemObserve = (socket) => {
+  const { options = {} } = getPluginContext('kea-socket.io');
+  const { SYSTEM_EVENTS = [] } = options;
+
+  SYSTEM_EVENTS.forEach((eventName) => {
+    const type = eventName;
+    socket.on(type, (payload) => {
+      observe({ type, payload, socket });
+    });
+  });
+};
