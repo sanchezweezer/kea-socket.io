@@ -1,9 +1,9 @@
 import { getPluginContext, setPluginContext } from 'kea';
 
 import { defaultsOptions } from './config';
-import { observe } from './observe';
+import { observe, addSystemObserve } from './observe';
 import { patchSocket, emitterActions } from './actions';
-import { getEmitters, addSystemObserve } from './utils';
+import { getEmitters } from './utils';
 
 const localStoragePlugin = ({ sockets = [], ...options } = {}) => ({
   name: 'kea-socket.io',
